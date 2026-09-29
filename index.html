@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>For You ❤️</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #09070b;
+            color: white;
+            font-family: Georgia, "Times New Roman", serif;
+            overflow-x: hidden;
+        }
+
+
+        /* =====================================================
+           MAGIC PARTICLES
+        ===================================================== */
+
+        .magic-container {
+            position: fixed;
+            inset: 0;
+
+            pointer-events: none;
+
+            overflow: hidden;
+
+            z-index: 50;
+        }
+
+        .magic-heart,
+        .butterfly {
+            position: absolute;
+
+            bottom: -80px;
+
+            opacity: 0;
+
+            pointer-events: none;
+
+            animation: flyUp linear infinite;
+        }
+
+
+        /* HEARTS */
+
+        .magic-heart {
+            color: rgba(255, 151, 181, 0.65);
+
+            text-shadow:
+                0 0 10px rgba(255, 100, 150, 0.5),
+                0 0 25px rgba(255, 100, 150, 0.25);
+
+            font-family: Arial, sans-serif;
+        }
+
+
+        /* BUTTERFLIES */
+
+        .butterfly {
+            font-size: 28px;
+
+            filter:
+                drop-shadow(
+                    0 0 8px rgba(255, 170, 200, 0.4)
+                );
+
+            animation-name: butterflyFly;
+        }
+
+
+        /* Different positions */
+
+        .magic-heart:nth-child(1) {
+            left: 5%;
+            font-size: 18px;
+            animation-duration: 12s;
+            animation-delay: 0s;
+        }
+
+        .magic-heart:nth-child(2) {
+            left: 18%;
+            font-size: 25px;
+            animation-duration: 15s;
+            animation-delay: 3s;
+        }
+
+        .magic-heart:nth-child(3) {
+            left: 35%;
+            font-size: 15px;
+            animation-duration: 11s;
+            animation-delay: 6s;
+        }
+
+        .magic-heart:nth-child(4) {
+            left: 52%;
+            font-size: 23px;
+            animation-duration: 14s;
+            animation-delay: 2s;
+        }
+
+        .magic-heart:nth-child(5) {
+            left: 70%;
+            font-size: 17px;
+            animation-duration: 13s;
+            animation-delay: 5s;
+        }
+
+        .magic-heart:nth-child(6) {
+            left: 88%;
+            font-size: 27px;
+            animation-duration: 16s;
+            animation-delay: 1s;
+        }
+
+
+        .butterfly:nth-child(7) {
+            left: 12%;
+            animation-duration: 18s;
+            animation-delay: 1s;
+        }
+
+        .butterfly:nth-child(8) {
+            left: 43%;
+            animation-duration: 20s;
+            animation-delay: 5s;
+        }
+
+        .butterfly:nth-child(9) {
+            left: 76%;
+            animation-duration: 17s;
+            animation-delay: 8s;
+        }
+
+
+        /* HEART MOVEMENT */
+
+        @keyframes flyUp {
+
+            0% {
+                transform:
+                    translateY(0)
+                    translateX(0)
+                    rotate(0deg);
+
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 0.7;
+            }
+
+            50% {
+                transform:
+                    translateY(-55vh)
+                    translateX(40px)
+                    rotate(15deg);
+            }
+
+            80% {
+                opacity: 0.45;
+            }
+
+            100% {
+                transform:
+                    translateY(-115vh)
+                    translateX(-50px)
+                    rotate(-20deg);
+
+                opacity: 0;
+            }
+        }
+
+
+        /* BUTTERFLY MOVEMENT */
+
+        @keyframes butterflyFly {
+
+            0% {
+                transform:
+                    translateY(0)
+                    translateX(0)
+                    rotate(-8deg);
+
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 0.8;
+            }
+
+            25% {
+                transform:
+                    translateY(-25vh)
+                    translateX(70px)
+                    rotate(12deg);
+            }
+
+            50% {
+                transform:
+                    translateY(-55vh)
+                    translateX(-50px)
+                    rotate(-12deg);
+            }
+
+            75% {
+                transform:
+                    translateY(-80vh)
+                    translateX(80px)
+                    rotate(10deg);
+            }
+
+            100% {
+                transform:
+                    translateY(-120vh)
+                    translateX(-40px)
+                    rotate(-8deg);
+
+                opacity: 0;
+            }
+        }
+
+
+        /* =====================================================
+           OPENING
+        ===================================================== */
+
+        .opening {
+            position: fixed;
+            inset: 0;
+
+            z-index: 1000;
+
+            background:
+                radial-gradient(
+                    circle at center,
+                    rgba(220, 110, 145, 0.20),
+                    transparent 45%
+                ),
+                #09070b;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            text-align: center;
+
+            transition:
+                opacity 1.3s ease,
+                visibility 1.3s ease;
+        }
+
+        .opening.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .opening-content {
+            padding: 30px;
+
+            animation: openingAppear 2s ease;
+        }
+
+        .opening-small {
+            color: #d9a8b8;
+
+            letter-spacing: 5px;
+
+            text-transform: uppercase;
+
+            font-size: 12px;
+
+            margin-bottom: 30px;
+        }
+
+        .opening h1 {
+            font-size: clamp(45px, 8vw, 80px);
+
+            font-weight: normal;
+
+            font-style: italic;
+
+            margin-bottom: 40px;
+        }
+
+        .heart {
+            color: #e8799a;
+
+            text-shadow:
+                0 0 15px rgba(232,121,154,0.5);
+        }
+
+        .open-button {
+            background: transparent;
+
+            color: white;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.35);
+
+            padding: 16px 40px;
+
+            border-radius: 50px;
+
+            font-family: inherit;
+
+            font-size: 15px;
+
+            cursor: pointer;
+
+            transition: 0.4s ease;
+        }
+
+        .open-button:hover {
+
+            background:
+                rgba(232,121,154,0.12);
+
+            border-color: #e8799a;
+
+            transform: scale(1.07);
+
+            box-shadow:
+                0 0 25px
+                rgba(232,121,154,0.2);
+        }
+
+
+        /* =====================================================
+           HERO
+        ===================================================== */
+
+        .hero {
+            min-height: 100vh;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            text-align: center;
+
+            position: relative;
+
+            background:
+                radial-gradient(
+                    circle at center,
+                    rgba(203,102,137,0.20),
+                    transparent 40%
+                ),
+                linear-gradient(
+                    135deg,
+                    #0b090e,
+                    #21131d,
+                    #100c12
+                );
+        }
+
+        .hero-content {
+            position: relative;
+
+            z-index: 2;
+
+            padding: 30px;
+
+            animation: fadeUp 2s ease;
+        }
+
+        .intro {
+
+            color: #d9a8b8;
+
+            font-size: 13px;
+
+            letter-spacing: 5px;
+
+            text-transform: uppercase;
+
+            margin-bottom: 30px;
+        }
+
+        .hero h1 {
+
+            font-size:
+                clamp(55px, 10vw, 110px);
+
+            font-weight: normal;
+
+            font-style: italic;
+
+            line-height: 1.1;
+
+            margin-bottom: 30px;
+        }
+
+        .hero-description {
+
+            max-width: 650px;
+
+            margin: auto;
+
+            color: #d2c5cb;
+
+            font-size: 19px;
+
+            line-height: 1.9;
+        }
+
+        .scroll {
+
+            margin-top: 70px;
+
+            color: #9d9097;
+
+            font-size: 12px;
+
+            letter-spacing: 4px;
+
+            animation: pulse 2s infinite;
+        }
+
+
+        /* =====================================================
+           SECTIONS
+        ===================================================== */
+
+        section {
+            padding: 120px 8%;
+
+            position: relative;
+
+            overflow: hidden;
+        }
+
+        .section-title {
+
+            text-align: center;
+
+            font-size:
+                clamp(38px, 5vw, 55px);
+
+            font-weight: normal;
+
+            font-style: italic;
+
+            margin-bottom: 25px;
+        }
+
+        .section-description {
+
+            max-width: 680px;
+
+            margin: 0 auto 65px;
+
+            text-align: center;
+
+            color: #b9adb4;
+
+            font-size: 17px;
+
+            line-height: 1.9;
+        }
+
+
+        /* =====================================================
+           BIRTHDAY
+        ===================================================== */
+
+        .birthday {
+
+            background: #110d13;
+
+            text-align: center;
+        }
+
+        .birthday-message {
+
+            max-width: 850px;
+
+            margin: auto;
+
+            color: #ded3d8;
+
+            font-size: 22px;
+
+            line-height: 2;
+        }
+
+        .birthday-message strong {
+
+            color: #efa5bb;
+
+            font-weight: normal;
+        }
+
+
+        /* =====================================================
+           MEMORIES
+        ===================================================== */
+
+        .memories {
+
+            background:
+                radial-gradient(
+                    circle at center,
+                    rgba(194,99,136,0.10),
+                    transparent 55%
+                );
+        }
+
+        .memory-intro {
+
+            max-width: 700px;
+
+            margin: 0 auto 70px;
+
+            text-align: center;
+
+            color: #c9bec4;
+
+            font-size: 18px;
+
+            line-height: 2;
+        }
+
+        .memory-grid {
+
+            max-width: 1100px;
+
+            margin: auto;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(270px,1fr)
+                );
+
+            gap: 28px;
+        }
+
+        .memory-card {
+
+            height: 380px;
+
+            position: relative;
+
+            overflow: hidden;
+
+            border-radius: 20px;
+
+            background: #1a141b;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.07);
+
+            transition: 0.5s ease;
+        }
+
+        .memory-card:hover {
+
+            transform:
+                translateY(-10px)
+                scale(1.01);
+        }
+
+        .memory-card img {
+
+            width: 100%;
+
+            height: 100%;
+
+            object-fit: cover;
+
+            opacity: 0.75;
+
+            transition: 0.6s ease;
+        }
+
+        .memory-card:hover img {
+
+            transform: scale(1.06);
+
+            opacity: 0.9;
+        }
+
+        .memory-overlay {
+
+            position: absolute;
+
+            left: 0;
+            right: 0;
+            bottom: 0;
+
+            padding: 35px 28px;
+
+            background:
+                linear-gradient(
+                    transparent,
+                    rgba(0,0,0,0.9)
+                );
+        }
+
+        .memory-overlay h3 {
+
+            font-size: 23px;
+
+            font-weight: normal;
+
+            margin-bottom: 8px;
+        }
+
+        .memory-overlay p {
+
+            color: #c8bdc3;
+
+            font-size: 14px;
+
+            line-height: 1.6;
+        }
+
+
+        /* =====================================================
+           FUTURE
+        ===================================================== */
+
+        .future {
+
+            min-height: 75vh;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            text-align: center;
+
+            background:
+                linear-gradient(
+                    rgba(13,10,15,0.7),
+                    rgba(13,10,15,0.95)
+                );
+        }
+
+        .future-content {
+
+            max-width: 850px;
+        }
+
+        .future-title {
+
+            color: #dca8b8;
+
+            font-size: 13px;
+
+            letter-spacing: 5px;
+
+            text-transform: uppercase;
+
+            margin-bottom: 35px;
+        }
+
+        .future-quote {
+
+            font-size:
+                clamp(30px,5vw,58px);
+
+            font-weight: normal;
+
+            font-style: italic;
+
+            line-height: 1.45;
+        }
+
+        .future-description {
+
+            margin-top: 35px;
+
+            color: #aaa0a6;
+
+            font-size: 17px;
+
+            line-height: 2;
+        }
+
+
+        /* =====================================================
+           FINAL
+        ===================================================== */
+
+        .final {
+
+            min-height: 65vh;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            text-align: center;
+
+            background: #08070a;
+        }
+
+        .final-content {
+
+            max-width: 800px;
+        }
+
+        .final-message {
+
+            font-size:
+                clamp(30px,5vw,55px);
+
+            line-height: 1.5;
+
+            font-style: italic;
+        }
+
+        .final-small {
+
+            margin-top: 35px;
+
+            color: #91868d;
+
+            font-size: 15px;
+
+            line-height: 1.8;
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        footer {
+
+            padding: 45px 20px;
+
+            text-align: center;
+
+            color: #625960;
+
+            font-size: 13px;
+        }
+
+
+        /* =====================================================
+           ANIMATIONS
+        ===================================================== */
+
+        @keyframes fadeUp {
+
+            from {
+                opacity: 0;
+
+                transform:
+                    translateY(35px);
+            }
+
+            to {
+                opacity: 1;
+
+                transform:
+                    translateY(0);
+            }
+        }
+
+        @keyframes openingAppear {
+
+            from {
+                opacity: 0;
+
+                transform:
+                    scale(0.95)
+                    translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+
+                transform:
+                    scale(1)
+                    translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+
+            0%,100% {
+                opacity: 0.35;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media(max-width:600px) {
+
+            section {
+                padding: 90px 6%;
+            }
+
+            .hero-description {
+                font-size: 17px;
+            }
+
+            .birthday-message {
+                font-size: 19px;
+            }
+
+            .memory-card {
+                height: 420px;
+            }
+
+            .butterfly {
+                font-size: 22px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         MAGIC FLOATING HEARTS + BUTTERFLIES
+    ===================================================== -->
+
+    <div class="magic-container">
+
+        <div class="magic-heart">♥</div>
+        <div class="magic-heart">♥</div>
+        <div class="magic-heart">♥</div>
+        <div class="magic-heart">♥</div>
+        <div class="magic-heart">♥</div>
+        <div class="magic-heart">♥</div>
+
+        <div class="butterfly">🦋</div>
+        <div class="butterfly">🦋</div>
+        <div class="butterfly">🦋</div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         OPENING SCREEN
+    ===================================================== -->
+
+    <div class="opening" id="opening">
+
+        <div class="opening-content">
+
+            <div class="opening-small">
+
+                I made something for you
+
+            </div>
+
+
+            <h1>
+
+                Just for you ya قلبوبتي
+
+                <span class="heart">
+                    ♥
+                </span>
+
+            </h1>
+
+
+            <button
+                class="open-button"
+                onclick="openGift()">
+
+                Open it
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         HERO
+    ===================================================== -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <div class="intro">
+
+                A little something I made for you
+
+            </div>
+
+
+            <h1>
+
+                haaapppyyyy 25
+
+                <span class="heart">
+                    ♥
+                </span>
+
+            </h1>
+
+
+            <p class="hero-description">
+
+                To the person who somehow made
+                ordinary days feel a little more special.
+
+            </p>
+
+
+            <div class="scroll">
+
+                ↓ &nbsp; KEEP SCROLLING &nbsp; ↓
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         BIRTHDAY MESSAGE
+    ===================================================== -->
+
+    <section class="birthday">
+
+        <h2 class="section-title">
+
+            For You
+
+        </h2>
+
+
+        <p class="section-description">
+
+            Alwebsite da ana 3mlto specialgift 3shan ante oltele an 3ed meladk al 25 da special f kan lazm afkr :* , da hykon maknna almofadl alprivate alle han7ot 3leh kol almemories bat3tna tool 3omrna ;"
+
+            <br>
+
+            Ana bhbk aktr mn ay wa2t fat w hafdl ahbk aktr w aktr ya kol hyati
+
+        </p>
+
+
+        <div class="birthday-message">
+
+            Happy birthday to someone who became
+
+            <strong>
+                much more special to me than I ever expected.
+            </strong>
+
+            <br><br>
+
+            I hope this year brings you happiness,
+            beautiful moments, new adventures,
+            and everything your heart is hoping for.
+
+            <br><br>
+
+            And I hope that whenever you come back
+            to this little place,
+
+            you remember that someone sat down,
+            wrote all this code,
+
+            and thought about you the entire time.
+
+            <br><br>
+
+            <span class="heart">
+                ♥
+            </span>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         OUR MEMORIES
+    ===================================================== -->
+
+    <section class="memories">
+
+        <h2 class="section-title">
+
+            Our Memories
+
+        </h2>
+
+
+        <div class="memory-intro">
+
+            This place is for our memories —
+            the little moments, the big ones,
+            and all the beautiful days still waiting for us.
+
+            <br><br>
+
+            We'll keep coming back here
+            and adding them,
+
+            <strong>
+                one memory at a time.
+            </strong>
+
+        </div>
+
+
+        <div class="memory-grid">
+
+
+            <!-- PHOTO 1 -->
+
+            <div class="memory-card">
+
+                <img src="photos/photo1.jpg">
+
+                <div class="memory-overlay">
+
+                    <h3>
+                        Awl yom lena fe shakktna
+                    </h3>
+
+                    <p>
+                        A memory that deserves
+                        to stay here forever.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- PHOTO 2 -->
+
+            <div class="memory-card">
+
+                <img src="photos/photo2.jpg">
+
+                <div class="memory-overlay">
+
+                    <h3>
+                        Awl date lena
+                    </h3>
+
+                    <p>
+                        One more little piece
+                        of our story.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- PHOTO 3 -->
+
+            <div class="memory-card">
+
+                <img src="photos/photo3.jpg">
+
+                <div class="memory-overlay">
+
+                    <h3>
+                        Akher date lena...
+                    </h3>
+
+                    <p>
+                        Because there are still
+                        so many memories waiting for us.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         OUR STORY
+    ===================================================== -->
+
+    <section class="future">
+
+        <div class="future-content">
+
+            <div class="future-title">
+
+                And this is only the beginning
+
+            </div>
+
+
+            <div class="future-quote">
+
+                "Our story is still being written."
+
+            </div>
+
+
+            <p class="future-description">
+
+                There will be more photos.
+                More places.
+                More random moments.
+                More laughs.
+                More days that we'll want to remember.
+
+                <br><br>
+
+                So this page will keep growing with us.
+
+            </p>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         FINAL MESSAGE
+    ===================================================== -->
+
+    <section class="final">
+
+        <div class="final-content">
+
+            <div class="final-message">
+
+                "This website isn't finished...
+
+                <br>
+
+                because our story isn't finished either."
+
+            </div>
+
+
+            <div class="final-small">
+
+                Happy Birthday ❤️
+
+                <br><br>
+
+                Here's to all the memories
+                we haven't made yet.
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <footer>
+
+        Made by Ahmed Elkassar For his Love Nada Talaat
+
+        <span class="heart">
+            ♥
+        </span>
+
+    </footer>
+
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ===================================================== -->
+
+    <script>
+
+    function openGift() {
+
+        const opening =
+            document.getElementById("opening");
+
+        const song =
+            document.getElementById("birthdaySong");
+
+
+        /* Start silently */
+
+        song.volume = 0;
+
+        song.play().then(() => {
+
+            /* Slowly increase volume */
+
+            let volume = 0;
+
+            const fadeIn = setInterval(() => {
+
+                volume += 0.02;
+
+                if (volume >= 0.45) {
+
+                    volume = 0.45;
+
+                    clearInterval(fadeIn);
+
+                }
+
+                song.volume = volume;
+
+            }, 100);
+
+        }).catch(error => {
+
+            console.log(
+                "Browser blocked the music:",
+                error
+            );
+
+        });
+
+
+        /* Reveal the website */
+
+        opening.classList.add("hidden");
+
+    }
+
+    </script>
+
+
+</body>
+
+<audio id="birthdaySong" loop>
+    <source src="music/our-song.mp3" type="audio/mpeg">
+</audio>
+
+</html>
